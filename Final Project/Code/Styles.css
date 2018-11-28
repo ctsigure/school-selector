@@ -1,0 +1,51 @@
+body{background-color: #f1eff5;} /*background color*/
+    
+p{line-height: 1.6;} /*body paragraph line spacing*/
+
+h1, h2, h3{ /*header fonts*/
+color: #7b75a1;
+font-family: Georgia, serif;}
+
+/*navbar*/
+.navbar, .dropdown-menu{background-color: #c5bfd9;} /*background color of the main navbar and dropdown menu*/
+
+.navbar-brand, .navbar-brand:hover{ /*appearance of main "Latitude: logo*/
+    background-color:#7b75a1;
+    color: #f1eff5;
+    font-family: Georgia, serif;
+    font-weight: bold;
+    font-size: 150%;
+    margin-left: 50px!important;} 
+    
+.nav.navbar-nav.navbar-right li a {color: #7b75a1;} /*text color of navbar menu items*/
+
+.nav.navbar-nav.navbar-right li a:hover { /*text color of navbar menu items when hovered over*/
+    background-color: transparent;
+    color: #f1eff5;}
+    
+.navbar-nav>.active>a{text-decoration:underline;background-color: transparent;} /*active link in navbar is underlined*/
+
+.navbar-toggle{border-color: #7b75a1;} /*color of the collapsed menu hamburger button frame*/
+
+.navbar-toggle .icon-bar {background-color: #7b75a1;} /*color of the collapsed menu hamburger button inner bars*/
+
+.dropdown-toggle, .dropdown-toggle:active, .open .dropdown-toggle, .dropdown-toggle:focus {background: transparent !important; } /*Makes dropdown button transparent*/  
+
+.active-img{border: 5px solid #7b75a1;} /*active image on the visualization pages (has a visible border*/
+
+.inactive-img{margin: 5px;} /*inactive image*/
+
+.active-img:hover, .inactive-img:hover, .img-link:hover{transform: scale(1.05, 1.05);} /*hovering over an image on comparison or visualizaton pages makes the image slightly bigger*/
+
+.table-hover tbody tr:hover td { /*appearance of a table row when hovered over*/
+border-top: solid 4px;
+border-bottom: solid 4px;
+background-color: #f1eff5;
+border-color: #7b75a1}
+
+.panel{background-color: #ffffff; /*appearance of the two custom panels on the homepage*/
+border: solid 3px #7b75a1;
+padding: 20px;
+border-radius: 10px;}
+
+hr{border-color:#7b75a1; border-width: 2px;} /*horizontal bar appearance*/
