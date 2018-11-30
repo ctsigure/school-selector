@@ -1,6 +1,5 @@
 mymap = L.map('mapid').setView([37.393507, -121.987338], 12);
-baseurl = 'http://open.mapquestapi.com/nominatim/v1/search.php?key=TmcKhVoM47cT6jdlyTyBrTnmElpE2HOq&format=json&addressdetails=1&limit=1&bounded=0&json_callback=resetMarkers';
-url = baseurl
+baseurl = 'https://open.mapquestapi.com/nominatim/v1/search.php?key=TmcKhVoM47cT6jdlyTyBrTnmElpE2HOq&format=json&addressdetails=1&limit=1&bounded=0&json_callback=';
 markerLocs = []
 
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
@@ -11,53 +10,74 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=p
     id: 'mapbox.streets'
 }).addTo(mymap);
 
-
+divId = 'searchdiv'
+callbackSId = 'callbackScript'
+counter = 0
+doneCallbacks = 0
 function markOnMap(address) {
-
-    url = baseurl + "&q=" + escape(address)
-    let div = document.getElementById('searchdiv')
+    // Create callback script
+    let callbackS = document.getElementById(callbackSId+counter)
+    let callbackName = 'callback' + counter
+    if (callbackS) {
+        callbackS.parentElement.removeChild(callbackS)
+    }
+    callbackS = document.createElement('script')
+    callbackS.innerHTML = `function ${callbackName}(r) {
+        markerLocs[${counter}] = r.length == 0 ? null : [parseFloat(r[0].lat), parseFloat(r[0].lon)]
+        doneCallbacks++
+    }`
+    document.getElementsByTagName('head')[0].appendChild(callbackS)
+    // Create tmp element to make the async api calls
+    let div = document.getElementById(divId+counter)
     if (div) {
         div.parentElement.removeChild(div)
     }
     div = document.createElement('div')
-    div.id = 'searchdiv'
+    div.id = divId + counter
+    let url = baseurl + callbackName + "&q=" + escape(address)
     let s = document.createElement('script')
     s.src = url
     div.appendChild(s)
     document.getElementById('mapid').appendChild(div)
+    counter++
 }
 
 function showMarkers() {
-    let count = 0
-    markerLocs.forEach((m) => {
-        L.marker([m[0], m[1]]).addTo(mymap)
-            .bindPopup(schoolNames[count++])
-    })
-    let s = sum(markerLocs)
-    let x = 0, y = 0
-    if (s[0]) {
-        x = s[0]/markerLocs.length
-        y = s[1]/markerLocs.length
-        mymap.setView([x, y], 10)
-    } else {
-        mymap.setView([markerLocs[0][0], markerLocs[0][1]], 12)
-    }
-}
-
-function resetMarkers(res) {
-    if (res.length == 0) {
+    if (doneCallbacks < addresses.length) {
         return
     }
-    res.forEach((l) => {
-        markerLocs.push([parseFloat(l.lat), parseFloat(l.lon)])
+    clearInterval(timerId)
+    /*
+    let cover = document.getElementById('cover')
+    cover.parentElement.removeChild(cover)
+    */
+    let count = 0
+    markerLocs.forEach(m => {
+        if (m) {
+            L.marker([m[0], m[1]]).addTo(mymap)
+                .bindPopup(schoolNames[count]+' '+JSON.stringify(m))
+        } else {
+            console.log("cannot find address: "+addresses[count])
+        }
+        count++
     })
-    showMarkers()
+    let lats = [], lons = []
+    markerLocs.forEach(l => {
+        if (l) {
+            lats.push(l[0])
+            lons.push(l[1])
+        }
+    })
+    let latMin = Math.min(...lats)
+    let latMax = Math.max(...lats)
+    let lonMin = Math.min(...lons)
+    let lonMax = Math.max(...lons)
+    let latMargin = (latMax - latMin) * 0.3
+    let lonMargin = (lonMax - lonMin) * 0.3
+    mymap.setView([(latMax+latMin)/2, (lonMax+lonMin)/2])
+    mymap.fitBounds([[latMin-latMargin, lonMin-lonMargin], [latMax+latMargin, lonMax+lonMargin]])
 }
+
 markerLocs.splice(0, markerLocs.length)
 addresses.forEach(markOnMap)
-
-function sum(l) {
-    let sum = [0, 0]
-    l.forEach((x) => { sum[0] += x[0]; sum[1] += x[1] })
-    return sum
-}
+timerId = setInterval(showMarkers, 1000)
