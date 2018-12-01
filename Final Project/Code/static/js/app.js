@@ -43,6 +43,12 @@ function renderTable() {
       var $cell = $row.insertCell(j);
       $cell.innerText = address[field];
     }
+    let cell = $row.insertCell(fields.length);
+    if (address.type != 'Public') {
+      cell.innerHTML = `<button class="btn btn-info" id="row${i.toString()}" onclick="localStorage.setItem('schoolName','${address.name}');location.href='predict.html'">Predict</button>`;
+    } else {
+      cell.innerText = "Free";
+    }
   }
 };
 
@@ -142,7 +148,7 @@ function setNoMorePages() {
 
 function resetPagination() {
   $loadMoreBtn.classList.remove("disabled");
-  $loadMoreBtn.innerText = "Load Next " + resultsPerPage + " addresses"
+  $loadMoreBtn.innerText = "See What's Next"
 }
 
 function isListEnd() {

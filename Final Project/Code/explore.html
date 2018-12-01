@@ -12,7 +12,8 @@
 
 
 
-<body> 
+<body>
+
   <div class="wrapper">
     <nav class="navbar navbar-default">
       <div class="container-fluid">
@@ -24,6 +25,7 @@
     <div class="hero text-center">
       <h1>All about Schools in San Jose</h1>
       <p>Let's start saving your time by answering those most important questions below:</p>
+      <hr>
     </div>
     <div class="row">
       <div class="col-md-3">
@@ -50,7 +52,8 @@
           <input type="text" class="form-control" id="faithbased" placeholder="Yes/No">
         </div>
       </div>
-    </div>    
+    </div>
+    <br>    
     <div class="row">
       <div class="col-md-3">
         <div class="form-group">
@@ -75,17 +78,23 @@
           <label for="type">Are you considering only Public or Private school?</label>
           <input type="text" class="form-control" id="type" placeholder="Public/Private">
           <br>
-          <a id="search" class="btn btn-primary">Search</a>
-          <button id="map" class="btn btn-primary" onclick="localStorage.setItem('addresses', JSON.stringify(filteredAddresses));location.href='map/index.html';">Show on Map</button>
+          <br>
+          <a id="search" class="btn btn btn-info">Search</a>
+          <button id="map" class="btn btn btn-info" onclick="localStorage.setItem('addresses', JSON.stringify(filteredAddresses));location.href='map/index.html';">Show on Map</button>
         </div>
       </div>
     </div>
+    <hr>
+    <br>
     <br>
     <div class="row">
       <div class="col-md-6 col-md-offset-6  text-right">
-        <button id="loadBtn" class="btn btn-success"></button>
+        <button id="loadBtn" class="btn btn-info"></button>
       </div>
   </div>
+  <br>
+  <br>
+  <hr>
     <div class="row">
       <div class="col-md-12">
          <table id = "myTable" data-toggle="myTable" data-flat="true" data-search="true" 
@@ -98,20 +107,21 @@
           <thead>
             <tr>
               <th data-field="ssname" data-sortable="true" onclick="sortTable(0)">School Name</th>
-              <th data-field="sszip" data-sortable="true" onclick="sortTable(1)">Zip Code</th>
+              <th data-field="sszip" data-sortable="true" onclick="sortTable(1)">Zipcode</th>
               <th data-field="sscity" data-sortable="true">City</th>
-              <th data-field="ssaddress" data-sortable="true">School Address</th>
-              <th data-field="ssgrade" data-sortable="true">Grade Offerred</th>
-              <th data-field="ssranking" data-sortable="true" onclick="sortTable(2)">Test Score Ranking</th>
-              <th data-field="ssreading" data-sortable="true">English Score</th>
-              <th data-field="ssmath" data-sortable="true">Math Score</th>
-              <th data-field="ssstudent" data-sortable="true">Total Student Number</th>
-              <th data-field="sstsratio" data-sortable="true">Teacher Student Ratio</th>
-              <th data-field="ssfmratio" data-sortable="true">Female Male Ratio</th>
-              <th data-field="sstype" data-sortable="true">School Type</th>
+              <th data-field="ssaddress" data-sortable="true">Address</th>
+              <th data-field="ssgrade" data-sortable="true">Grade</th>
+              <th data-field="ssranking" data-sortable="true" onclick="sortTable(2)">Ranking</th>
+              <th data-field="ssreading" data-sortable="true">English</th>
+              <th data-field="ssmath" data-sortable="true">Math</th>
+              <th data-field="ssstudent" data-sortable="true">Students#</th>
+              <th data-field="sstsratio" data-sortable="true">Student:Teacher</th>
+              <th data-field="ssfmratio" data-sortable="true">Female:Male</th>
+              <th data-field="sstype" data-sortable="true">Type</th>
               <th data-field="sstuition" data-sortable="true">Tuition</th>
               <th data-field="ssfaithbased" data-sortable="true">Faithbased?</th>
-              <th data-field="sslottery" data-sortable="true">Lottery Accepted?</th>
+              <th data-field="sslottery" data-sortable="true">Lottery?</th>
+              <th data-field="ssprediction" data-sortable="true">Prediction</th>
             </tr>
           </thead>
           <tbody id="myBody">

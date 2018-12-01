@@ -27,7 +27,7 @@ function markOnMap(address) {
         doneCallbacks++
     }`
     document.getElementsByTagName('head')[0].appendChild(callbackS)
-    // Create tmp element to make the async api calls
+    
     let div = document.getElementById(divId+counter)
     if (div) {
         div.parentElement.removeChild(div)
@@ -55,7 +55,7 @@ function showMarkers() {
     markerLocs.forEach(m => {
         if (m) {
             L.marker([m[0], m[1]]).addTo(mymap)
-                .bindPopup(schoolNames[count]+' '+JSON.stringify(m))
+                .bindPopup(schoolNames[count])
         } else {
             console.log("cannot find address: "+addresses[count])
         }
